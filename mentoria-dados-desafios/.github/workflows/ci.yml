@@ -1,0 +1,30 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Verify Structure
+        run: |
+          echo "Checking if essential directories exist..."
+          test -d docs
+          test -d datasets
+          test -d scripts/ddl
+          test -d scripts/dml
+          test -d sql/nivel-basico
+          test -d sql/nivel-intermediario
+          test -d sql/nivel-avancado
+
+      - name: Check DDL Files
+        run: |
+          test -f scripts/ddl/create_tables.sql
+          test -f scripts/ddl/constraints.sql
