@@ -2,3 +2,8 @@ pandas
 sqlalchemy
 psycopg2-binary
 faker
+great-expectations
+pytest
+pytest-cov
+pyarrow
+ruff

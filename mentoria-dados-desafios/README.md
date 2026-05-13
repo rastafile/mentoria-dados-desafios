@@ -19,7 +19,7 @@ Para detalhes completos do roadmap, veja nosso [Roadmap Completo](docs/roadmap.m
 
 - **PostgreSQL**: Banco de dados relacional principal.
 - **Docker & Docker Compose**: Orquestração do ambiente local.
-- **Python**: Utilizado para geração de dados sintéticos (dummy data) e, futuramente, pipelines.
+- **Python**: Utilizado para geração de dados sintéticos (dummy data) e pipelines de dados.
 - **GitHub Actions**: Pipeline de CI para validação contínua.
 - **VS Code**: Editor sugerido.
 
@@ -36,8 +36,8 @@ mentoria-dados-desafios/
 ├── sql/                 # Desafios SQL divididos em níveis
 ├── modelagem/           # Desafios de modelagem divididos em níveis
 ├── pipelines/           # Desafios de engenharia de dados divididos em níveis
-├── notebooks/           # Espaço para análises exploratórias (Jupyter)
-├── tests/               # Testes de pipelines e qualidade de dados
+├── notebooks/           # (reservado) Análises exploratórias com Jupyter
+├── tests/               # (reservado) Testes de pipelines e qualidade de dados
 └── docker-compose.yml   # Subida do banco PostgreSQL local
 ```
 
@@ -87,6 +87,11 @@ mentoria-dados-desafios/
    psql -h localhost -U postgres -d mentoria_dados -f scripts/setup/init_database.sql
    ```
    Quando pedir a senha, digite: `postgres`
+
+   > **Alternativa sem psql instalado:** use `docker exec`
+   > ```bash
+   > docker exec -it mentoria_postgres psql -U postgres -d mentoria_dados
+   > ```
 
    **Conexão com o Banco:**
    ```
