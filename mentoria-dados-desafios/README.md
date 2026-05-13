@@ -43,46 +43,81 @@ mentoria-dados-desafios/
 
 ## 🚀 Como Subir o Ambiente
 
-1. **Clone o repositório:**
+1. **Faça um Fork do Repositório**
+   Acesse [github.com/anomalyco/mentoria-dados-desafios](https://github.com/anomalyco/mentoria-dados-desafios) e clique em **Fork** para criar uma cópia na sua conta.
+
+2. **Clone o seu Fork:**
    ```bash
-   git clone https://github.com/seu-usuario/mentoria-dados-desafios.git
+   git clone https://github.com/SEU_USUARIO/mentoria-dados-desafios.git
    cd mentoria-dados-desafios
    ```
 
-2. **Inicie o Banco de Dados com Docker:**
+3. **Inicie o Banco de Dados com Docker:**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
    Isso criará uma instância do PostgreSQL rodando na porta `5432` com o banco `mentoria_dados` (Usuário: `postgres`, Senha: `postgres`).
 
-3. **Instale as Dependências Python:**
+4. **Instale as Dependências Python:**
    ```bash
    python -m venv venv
    source venv/bin/activate  # ou venv\Scripts\activate no Windows
    pip install -r requirements.txt
    ```
 
-4. **Gere e Popule os Dados:**
-   Execute o script principal para gerar dados em CSV e inserir no banco:
+5. **Gere os Dados (CSV + Scripts DML):**
    ```bash
    python scripts/setup/generate_data.py
    ```
-   *(Este script irá recriar as tabelas e inserir centenas de registros consistentes simulando um cenário de e-commerce com clientes, pedidos, produtos, etc).*
+   Isso gera arquivos CSV em `datasets/` e scripts de inserção em `scripts/dml/`.
+
+6. **Crie as Tabelas e Popule o Banco:**
+   ```bash
+   # Opção A: passo a passo (DDL + DML)
+   psql -h localhost -U postgres -d mentoria_dados -f scripts/ddl/create_tables.sql
+   psql -h localhost -U postgres -d mentoria_dados -f scripts/ddl/constraints.sql
+   psql -h localhost -U postgres -d mentoria_dados -f scripts/dml/insert_customers.sql
+   psql -h localhost -U postgres -d mentoria_dados -f scripts/dml/insert_products.sql
+   psql -h localhost -U postgres -d mentoria_dados -f scripts/dml/insert_orders.sql
+   psql -h localhost -U postgres -d mentoria_dados -f scripts/dml/insert_order_items.sql
+   psql -h localhost -U postgres -d mentoria_dados -f scripts/dml/insert_payments.sql
+   psql -h localhost -U postgres -d mentoria_dados -f scripts/dml/insert_shipments.sql
+
+   # Opção B: atalho (init_database.sql já inclui DDL + constraints)
+   psql -h localhost -U postgres -d mentoria_dados -f scripts/setup/init_database.sql
+   ```
+   Quando pedir a senha, digite: `postgres`
+
+   **Conexão com o Banco:**
+   ```
+   Host: localhost  |  Porta: 5432  |  Database: mentoria_dados
+   Usuário: postgres  |  Senha: postgres
+   String: postgresql://postgres:postgres@localhost:5432/mentoria_dados
+   ```
 
 ## 💡 Como Executar os Desafios
 
 Os desafios estão dentro da pasta correspondente à sua trilha atual (ex: `sql/nivel-basico`). 
 
-1. Leia o arquivo `.sql` ou `.md` do desafio.
-2. Escreva sua query no arquivo.
-3. Valide o resultado contra o seu banco de dados local.
+1. Leia o arquivo `.sql` do desafio (ex: `desafio-01.sql`).
+2. Escreva sua query dentro do próprio arquivo, após o comentário `-- Escreva sua query abaixo:`.
+3. Valide o resultado executando a query no banco usando uma das ferramentas abaixo:
+   - **Terminal:** `psql -h localhost -U postgres -d mentoria_dados`
+   - **DBeaver / DataGrip / TablePlus:** conecte usando os dados acima e rode a query
+   - **VS Code:** extensão "PostgreSQL" ou "SQLTools"
 
-## 🤝 Como Contribuir e Versionar seus Desafios
+## 🤝 Como Versionar seus Desafios no Fork
 
-Para os mentorados que desejam salvar o progresso:
-1. Crie uma branch com seu nome e trilha: `git checkout -b fulano-sql-basico`
-2. Resolva os desafios nos arquivos locais.
-3. Faça o commit com mensagens claras: `git commit -m "feat: resolve desafio 01 a 05 de SQL basico"`
-4. Suba para o repositório remoto ou para o seu fork: `git push origin fulano-sql-basico`
+1. Resolva os desafios editando os arquivos `.sql`.
+2. Adicione e commite as alterações no seu fork:
+   ```bash
+   git add .
+   git commit -m "feat: resolve desafio 01 a 05 de SQL basico"
+   ```
+3. Envie para o seu fork no GitHub:
+   ```bash
+   git push origin main
+   ```
+4. Avise seu mentor que os desafios estão prontos para revisão.
 
 Para mais detalhes sobre a convivência e as metodologias, leia as [Regras da Mentoria](docs/regras.md) e o [Overview](docs/overview.md).
