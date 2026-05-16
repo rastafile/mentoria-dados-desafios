@@ -44,7 +44,7 @@ mentoria-dados-desafios/
 ## 🚀 Como Subir o Ambiente
 
 1. **Faça um Fork do Repositório**
-   Acesse [github.com/anomalyco/mentoria-dados-desafios](https://github.com/rastafile/mentoria-dados-desafios) e clique em **Fork** para criar uma cópia na sua conta.
+   Acesse [github.com/rastafile/mentoria-dados-desafios](https://github.com/rastafile/mentoria-dados-desafios) e clique em **Fork** para criar uma cópia na sua conta.
 
 2. **Clone o seu Fork:**
    ```bash
